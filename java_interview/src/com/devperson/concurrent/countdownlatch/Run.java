@@ -1,5 +1,7 @@
 package com.devperson.concurrent.countdownlatch;
 
+import java.util.concurrent.CyclicBarrier;
+
 public class Run {
 
     public static void main(String[] args) {
@@ -7,5 +9,6 @@ public class Run {
         MyThread myThread = new MyThread(myServiceCountLatch);
         myThread.start();
         myServiceCountLatch.downLatch();
+        CyclicBarrier cyclicBarrier;
     }
 }

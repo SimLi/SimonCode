@@ -2,6 +2,7 @@ package com.devperson.executors.executors_1;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 public class CachedThreadPool {
     public static void main(String[] args) {
@@ -28,5 +29,25 @@ public class CachedThreadPool {
             }
         });
         executorService.shutdown();
+
+
+        // 使用自定义的线程工程
+        ExecutorService myexecutorService = Executors.newCachedThreadPool(new MyThreadFactoryCaech());
+        myexecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(" 我在运行自定义的线程工厂 ==" + Thread.currentThread().getName());
+            }
+        });
+    }
+
+    static class MyThreadFactoryCaech implements ThreadFactory {
+
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread thread = new Thread(r);
+            thread.setName("这是我定义的线程" + System.currentTimeMillis());
+            return thread;
+        }
     }
 }
