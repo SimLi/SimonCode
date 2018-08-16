@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+  webservices:
+    path: /jasmp-web
+server:
+  context-path: /jasmp-web
+  port: 9001

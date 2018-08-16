@@ -1,0 +1,21 @@
+from django.db import models
+
+# Create your models here.
+
+
+class books(models.Model):
+    book_name = models.CharField(max_length=200)
+    add_time=models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.book_name
+
+
+class Snippet(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100, blank=True, default='')
+    code = models.TextField()
+    linenos = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('created',)

@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:mysql://39.108.1.7:3306/springCloud?useUnicode=true&characterEncoding=UTF-8&useSSL=true
+    username: root
+    password: lixiaomeng163@163.com
+    driver-class-name: com.mysql.jdbc.Driver
+  application:
+    name: spring-dept
+eureka:
+  client:
+    service-url:
+      defaultZone: http://service2:9002/eureka/,http://service1:9001/eureka/
+
+---
+spring:
+  profiles: dept1
+server:
+  port: 9020
+  context-path: /spring-dept
+
+---
+spring:
+  profiles: dept2
+server:
+  port: 9021
+  context-path: /spring-dept

@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: spring-cloud-server
+
+---
+spring:
+  profiles: SimonSpring1
+server:
+  port: 9001
+eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://service2:9002/eureka/
+  instance:
+    hostname: service1
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://service1:9001/eureka/
+
+
+---
+spring:
+  profiles: SimonSpring2
+server:
+  port: 9002
+eureka:
+  instance:
+    hostname: service2
+  client:
+    service-url:
+      defaultZone: http://service1:9001/eureka/
