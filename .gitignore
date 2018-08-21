@@ -15,3 +15,4 @@ kaikeba/.idea
 *.class
 
 kaikeba/mybatis-01/target
+kaikeba/*/target
