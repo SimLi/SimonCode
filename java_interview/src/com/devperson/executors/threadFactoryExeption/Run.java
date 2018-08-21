@@ -13,11 +13,26 @@ public class Run {
 //        Simon's Wed Jul 25 22:43:54 CST 2018 出现异常
 //        自动以异常处理，异常信息是： null
         ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(5,5,10L, TimeUnit.SECONDS,
-                new LinkedBlockingDeque<Runnable>(),new MyThreadFactoryA());
+                new LinkedBlockingDeque<Runnable>(),
+                new MyThreadFactoryA(),
+                new ThreadPoolExecutor.DiscardPolicy());
+        // set方式添加拒绝异常请求
+        poolExecutor.setRejectedExecutionHandler((runnable, executor) -> {
+            // runnable 被拒绝线程的对象
+            // 线程执行器
+        });
+
         poolExecutor.execute(() -> {
             System.out.println(Thread.currentThread().getName() +  "begin==" + System.currentTimeMillis());
             String 测试自定义异常 = null;
             测试自定义异常.indexOf(0);
         });
+
+
+        ThreadPoolExecutor poolExecutor1 = new ThreadPoolExecutor(5,5,10L, TimeUnit.SECONDS,
+                new LinkedBlockingDeque<Runnable>(),
+                new MyThreadFactoryA(),
+                new ThreadPoolExecutor.AbortPolicy() // 自定义线程拒绝策略
+        );
     }
 }

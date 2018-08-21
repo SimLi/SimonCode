@@ -7,6 +7,7 @@ public class ShutDownThread implements Runnable
         System.out.println(Thread.currentThread().getName()+"  begin==" + System.currentTimeMillis());
         try {
             Thread.sleep(1000);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
