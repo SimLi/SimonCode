@@ -1,0 +1,74 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devfuns.mapper.DeptMapper">
+
+    <!--autoMapping="true" 设置结果集自动映射到type属性对应的类中，如果结果集中的字段和类中的字段，能都映射上，
+        则可以设置autoMapping="true"， resultMap中的result可以不用一个一个的设置-->
+    <resultMap id="deptEmployee" type="Dept" autoMapping="true" >
+        <result property="deptNo" column="deptNo"></result>
+        <!--<result property="deptName" column="dept_name"/>-->
+        <!--<result property="deptCode" column="dept_code"/>-->
+        <collection property="employeeList" ofType="Employee" autoMapping="true">
+            <!--<result property="empId" column="emp_id"></result>-->
+            <!--<result property="empName" column="emp_name"/>-->
+            <!--<result property="empSal" column="emp_sal"/>-->
+            <!--<result property="empLoc" column="emp_loc"/>-->
+            <!--<result property="deptNo" column="dept_no" />-->
+        </collection>
+    </resultMap>
+
+    <sql id="deptCol">
+        dept_no,dept_name,dept_code
+    </sql>
+
+    <select id="selectDept" resultType="Dept">
+      SELECT * FROM kaikeba.dept
+    </select>
+
+    <!--useGeneratedKeys="true" 标识mybatis可以通过Statement接口中getGeneratedKeys()
+    方法获得本次插入后得到自动增长主键值 keyProperty="deptNo" 表示在插入完成以后，通过getGeneratedKeys()把插入的
+    ID，注入到改属性中-->
+    <insert id="insterDept" useGeneratedKeys="true" keyProperty="deptNo">
+        INSERT INTO kaikeba.dept
+        <set>
+            <if test="deptName != null and deptName != ''">
+                dept_name = #{deptName},
+            </if>
+            <if test="deptCode != null and deptCode != '' ">
+                dept_code = #{deptCode},
+            </if>
+        </set>
+    </insert>
+
+    <!--selectKey:用于声明主键不能自动生成，或者手动查询产生，如果使用该种方式进行插入，那么返回对象的主键将是查询的结果
+    如果是Oracle数据库，则可以通过查询序列值，来生成主键-->
+    <insert id="insterBySelectKey" >
+        <selectKey resultType="Integer" keyProperty="deptNo" order="BEFORE" >
+            SELECT MAX(dept_no) +1 FROM kaikeba.dept
+
+        </selectKey>
+        INSERT INTO kaikeba.dept
+        <set>
+            <if test="deptName != null and deptName != ''">
+                dept_name = #{deptName},
+            </if>
+            <if test="deptCode != null and deptCode != '' ">
+                dept_code = #{deptCode},
+            </if>
+        </set>
+    </insert>
+
+    <select id="selectEmployeeByDeptNo" resultMap="deptEmployee" >
+      select de.dept_no deptNo,dept_name,dept_code,
+        em.emp_id,em.emp_name,em.emp_loc,em.emp_sal,em.dept_no
+         from  kaikeba.dept de
+        left join kaikeba.employee em on de.dept_no = em.dept_no
+        <where>
+            <if test="deptNo !=null and deptNo != ''">
+                 and de.dept_no = #{deptNo}
+            </if>
+        </where>
+    </select>
+
+</mapper>

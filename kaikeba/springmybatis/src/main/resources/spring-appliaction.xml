@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--加载资源文件的两种方式context:property-placeholder和bean形式-->
+    <!--<context:property-placeholder location="classpath*:jdbc-properties.properties" />-->
+
+    <!--加载资源文件-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc-properties.properties"/>
+    </bean>
+
+
+    <!--数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <!--<property name="filters" value="log4j"/>-->
+        <property name="maxActive" value="5"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxWait" value="6000"/>
+    </bean>
+
+    <!--mybatis集成Spring的SqlSessionFactoryBean-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+
+        <!--此处可以配置类似以mybatis中的核心配置文件的属性配置properties
+            settings
+            typeAliases
+            plugins
+            objectFactory
+            objectWrapperFactory
+            reflectorFactory
+            environments
+            databaseIdProvider
+            typeHandlers
+            mappers
+          -->
+
+        <!--数据源-->
+        <property name="dataSource" ref="dataSource" />
+        <!--别名-->
+        <property name="typeAliasesPackage" value="com.devfuns.model" />
+        <!--mapper映射文件地址-->
+        <property name="mapperLocations" value="classpath*:com/devfuns/mapper/*Mapper.xml" />
+
+
+        <!--设置mybatis配置文件控制文件-->
+        <property name="configuration">
+            <bean class="org.apache.ibatis.session.Configuration" >
+                <property name="mapUnderscoreToCamelCase" value="true" />
+
+            </bean>
+        </property>
+
+    </bean>
+
+    <!--自动扫描mapper关系映射-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />-->
+        <property name="basePackage" value="com.devfuns.mapper" />
+    </bean>
+
+    <!--声明事物管理-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!--支持注解驱动的事务管理，指定事务管理器 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--开启自动扫描-->
+    <context:component-scan base-package="com.devfuns" />
+
+    <!--7 aspectj支持自动代理实现AOP功能 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+
+</beans>

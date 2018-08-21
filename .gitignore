@@ -7,3 +7,9 @@ python/.idea/workspace.xml
 python/.idea
 python/headFirst/.idea/workspace.xml
 java_interview/.idea/workspace.xml
+kaikeba/.idea/compiler.xml
+kaikeba/.idea/encodings.xml
+
+kaikeba/.idea
+*.iml
+*.class
