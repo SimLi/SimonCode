@@ -50,7 +50,6 @@
             typeHandlers
             mappers
           -->
-
         <!--数据源-->
         <property name="dataSource" ref="dataSource" />
         <!--别名-->
@@ -58,15 +57,14 @@
         <!--mapper映射文件地址-->
         <property name="mapperLocations" value="classpath*:com/devfuns/mapper/*Mapper.xml" />
 
-
         <!--设置mybatis配置文件控制文件-->
         <property name="configuration">
             <bean class="org.apache.ibatis.session.Configuration" >
+                <!--配置查询结果和Model类（resultType）的属性对应关系，这里指定是驼峰法匹配，
+                数据库中的字段按照dept_no对应model类中的deptNo属性-->
                 <property name="mapUnderscoreToCamelCase" value="true" />
-
             </bean>
         </property>
-
     </bean>
 
     <!--自动扫描mapper关系映射-->
