@@ -13,3 +13,5 @@ kaikeba/.idea/encodings.xml
 kaikeba/.idea
 *.iml
 *.class
+
+kaikeba/mybatis-01/target
