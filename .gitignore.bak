@@ -20,6 +20,4 @@ spring_boot_code/.idea
 java_interview/out
 java_interview/.idea
 spring_boot_code/target
-*/.idea
-java_interview/.idea/workspace.xml
-java_interview/.idea/workspace.xml
+java_interview/.idea

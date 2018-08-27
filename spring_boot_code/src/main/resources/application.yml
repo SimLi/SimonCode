@@ -1,0 +1,8 @@
+spring:
+  redis:
+#    sentinel:
+#      master: mymaster
+#      nodes: 10.10.10.10:26379
+    password: abcd1234
+    cluster:
+      nodes: 10.10.10.10:9000,10.10.10.10:9001,10.10.10.10:9002
