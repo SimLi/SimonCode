@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by sim on 2018/8/29.
  * 系统的Configuration类，配置了ObjectMapper的格式化内容
+ * MapperScan mybatis的mapper接口扫描范围
  */
 @Configuration
 @MapperScan(basePackages = "com.devfuns.mapper")
@@ -20,4 +21,6 @@ public class BlogConfig {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
         return objectMapper;
     }
+
+
 }

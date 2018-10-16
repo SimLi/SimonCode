@@ -300,4 +300,10 @@
       allow_feed = #{allowFeed,jdbcType=BIT}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
+
+  <select id="selectContentPage" resultType="Contents">
+    select
+    <include refid="Base_Column_List"></include>
+    from simonBlog.t_contents
+  </select>
 </mapper>

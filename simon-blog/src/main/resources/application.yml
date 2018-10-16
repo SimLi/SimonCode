@@ -25,7 +25,13 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+
 # jwt 生成token的私钥及token的有效时间
 jwt:
   expiration: 1800
   secret: simon_bolg
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

@@ -19,6 +19,7 @@ public class AdminServiceDefaultImpl implements IAdminService {
     @Resource
     UserMapper userMapper;
 
+
     @Override
     public UserModel selectUserByNameAndPassword(String username, String password) {
 

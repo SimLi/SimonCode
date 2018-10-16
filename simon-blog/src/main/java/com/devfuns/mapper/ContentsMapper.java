@@ -1,6 +1,9 @@
 package com.devfuns.mapper;
 
 import com.devfuns.model.article.Contents;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 public interface ContentsMapper {
     /**
@@ -58,4 +61,6 @@ public interface ContentsMapper {
      * @mbggenerated Wed Aug 29 20:14:14 CST 2018
      */
     int updateByPrimaryKey(Contents record);
+
+    List<Contents> selectContentPage();
 }
